@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a href="#" class="navbar-brand">Social Network</a>
+            <a href="{{route('home')}}" class="navbar-brand">Social Network</a>
         </div>
 
         <div class="collapse navbar-collapse">
@@ -11,7 +11,7 @@
                 <li><a href="#">Friends</a></li>
             </ul>
 
-            <form action="#" role="search" class="navbar-form navbar-left">
+            <form action="{{route('search.results')}}" role="search" class="navbar-form navbar-left">
                 <div class="form-group">
                     <input type="text" name="query" class="form-control"
                            placeholder="Find people"/>
@@ -21,8 +21,9 @@
         @endif 
             <ul class="nav navbar-nav navbar-right">
             @if(Auth::check())
-                <li><a href="#">{{Auth::user()->getNameOrUsername()}}</a></li>
-                <li><a href="#">Update profile</a></li>
+                <li><a href="{{route('profile.index', ['username'=>Auth::user()->username])}}">
+                        {{Auth::user()->getNameOrUsername()}}</a></li>
+                <li><a href="{{route('profile.edit')}}">Update profile</a></li>
                 <li><a href="{{route('auth.signout')}}">Sign out</a></li>
             @else 
                 <li><a href="{{route('auth.signup')}}">Sign up</a></li>

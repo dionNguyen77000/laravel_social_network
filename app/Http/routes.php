@@ -20,7 +20,9 @@ Route::get('/', [
 Route::get('/alert', function(){
    return redirect() ->route('home')->with('info', 'You have signed up');
 });
-/* Authentication */
+/*
+*Authentication
+ * */
 Route::get('/signup' , [
     'uses' => 'AuthController@getSignup',
     'as' => 'auth.signup',
@@ -47,6 +49,33 @@ Route::post('/signin', [
 Route::get('/signout', [
 
     'uses' => 'AuthController@getSignout',
-    'as' => 'auth.signout'
+    'as' => 'auth.signout',
 ]);
 
+/**
+ * Search
+ */
+Route::get('/search', [
+   'uses' => 'SearchController@getResults',
+   'as' => 'search.results',
+]);
+
+/**
+ * User Profile
+ */
+
+Route::get('/user/{username}', [
+   'uses' => 'ProfileController@getProfile',
+   'as' => 'profile.index',
+]);
+
+Route::get('/profile/edit', [
+   'uses' => 'ProfileController@getEdit',
+   'as' => 'profile.edit',
+   'middleware' => ['auth'],
+]);
+
+Route::post('/profile/edit', [
+    'uses' => 'ProfileController@postEdit',
+    'middleware' => ['auth'],
+]);
