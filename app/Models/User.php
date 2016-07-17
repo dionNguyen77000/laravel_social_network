@@ -2,6 +2,7 @@
 
 namespace Social_Net\Models;
 
+use Social_Net\Models\Status;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -62,6 +63,10 @@ class User extends Model implements AuthenticatableContract
     {
         return $this->hasMany('Social_Net\Models\Status', 'user_id');
     }
+
+    public function likes(){
+        return $this->hasMany('Social_Net\Models\Like', 'user_id');
+    }
     // who is my friends?
     public function friendsOfMine()
     {
@@ -121,6 +126,13 @@ class User extends Model implements AuthenticatableContract
     public function isFriendsWith(User $user)
     {
         return (bool) $this->friends()->where('id', $user->id)->count();
+    }
+    /*If user already liked $status*/
+    public function hasLikedStatus(Status $status)
+    {
+        return (bool) $status->likes
+            ->where('user_id', $this->id)
+            ->count();
     }
 
 }

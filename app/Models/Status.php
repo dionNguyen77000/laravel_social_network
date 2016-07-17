@@ -30,5 +30,10 @@ class Status extends Model
     {
         return $this->hasMany('Social_Net\Models\Status','parent_id');
     }
+    /*geat all likes of this status*/
+    public function likes()
+    {
+        return $this->morphMany('Social_Net\Models\Like','likeable');
+    }
 
 }
